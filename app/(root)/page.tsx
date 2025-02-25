@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
-
 const HomePage = () => {
-  return <Button></Button>;
+  return <>PAC 8</>;
 };
 
 export default HomePage;
