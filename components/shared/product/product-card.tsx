@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, Star } from "lucide-react";
-
+import ProductPrice from "./product-price";
 const ProductCard = ({ product }: { product: any }) => {
   return (
     <div className="group relative flex flex-col rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
@@ -47,16 +47,18 @@ const ProductCard = ({ product }: { product: any }) => {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-gray-900 dark:text-white">
-              ${product.price.toFixed(2)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-gray-500 line-through dark:text-gray-400">
-                ${product.originalPrice.toFixed(2)}
-              </span>
-            )}
-          </div>
+          {product.stock > 0 ? (
+            <div className="flex items-center gap-2">
+              <ProductPrice value={Number(product.price)} />
+              {product.originalPrice && (
+                <span className="text-sm text-gray-500 line-through dark:text-gray-400">
+                  ${product.originalPrice.toFixed(2)}
+                </span>
+              )}
+            </div>
+          ) : (
+            <p className="text-destructive">Out Of Stock</p>
+          )}
         </div>
       </div>
     </div>
