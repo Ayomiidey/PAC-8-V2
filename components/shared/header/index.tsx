@@ -1,16 +1,17 @@
-import { ShoppingCart, UserIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import { ShoppingCart, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { APP_NAME } from "@/lib/constants";
 import ModeToggle from "./mode-toggle";
+
+const APP_NAME = "PAC-8";
 
 const Header = () => {
   return (
     <header className="w-full border-b">
-      <div className="wrapper flex-between">
-        <div className="flex-start">
-          <Link href="/" className="flex-start">
+      <div className="wrapper flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center">
             <Image
               src="/images/logoPac8.jpg"
               alt={`${APP_NAME} Logo`}
@@ -20,17 +21,32 @@ const Header = () => {
             />
           </Link>
         </div>
-        <div className="space-x-2">
+
+        <div className="flex items-center space-x-2">
           <ModeToggle />
-          <Button asChild variant="ghost">
-            <Link href="/cart">
-              <ShoppingCart />
-              Cart
+          <Button asChild variant="ghost" className="hidden sm:flex">
+            <Link href="/cart" className="flex items-center gap-2">
+              <ShoppingCart size={20} />
+              <span>Cart</span>
             </Link>
           </Button>
-          <Button asChild>
+
+          <Button asChild className="hidden sm:flex">
+            <Link href="/sign-in" className="flex items-center gap-2">
+              <UserIcon size={20} />
+              <span>Sign In</span>
+            </Link>
+          </Button>
+
+          <Button asChild variant="ghost" className="sm:hidden">
+            <Link href="/cart">
+              <ShoppingCart size={20} />
+            </Link>
+          </Button>
+
+          <Button asChild className="sm:hidden">
             <Link href="/sign-in">
-              <UserIcon /> Sign In
+              <UserIcon size={20} />
             </Link>
           </Button>
         </div>
