@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, Star } from "lucide-react";
 import ProductPrice from "./product-price";
+import { Product } from "@/types";
 
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="group relative flex flex-col rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
       <button
@@ -17,7 +18,7 @@ const ProductCard = ({ product }: { product: any }) => {
       </button>
 
       <Link
-        href={`/products/${product.slug}`}
+        href={`/product/${product.slug}`}
         className="relative overflow-hidden pt-[100%]"
       >
         <Image
@@ -32,7 +33,7 @@ const ProductCard = ({ product }: { product: any }) => {
 
       <div className="flex flex-1 flex-col p-2 sm:p-4">
         <div className="text-xs">{product.brand}</div>
-        <Link href={`/products/${product.slug}`} className="mb-1 mt-1 sm:mt-2">
+        <Link href={`/product/${product.slug}`} className="mb-1 mt-1 sm:mt-2">
           <h3 className="line-clamp-2 text-xs font-medium text-gray-900 hover:text-blue-600 dark:text-gray-100 dark:hover:text-blue-400 sm:text-sm">
             {product.name}
           </h3>
@@ -54,11 +55,6 @@ const ProductCard = ({ product }: { product: any }) => {
           {product.stock > 0 ? (
             <div className="flex items-center gap-1 sm:gap-2">
               <ProductPrice value={Number(product.price)} />
-              {product.originalPrice && (
-                <span className="text-xs text-gray-500 line-through dark:text-gray-400 sm:text-sm">
-                  ${product.originalPrice.toFixed(2)}
-                </span>
-              )}
             </div>
           ) : (
             <p className="text-red-600 text-xs sm:text-sm">Out Of Stock</p>
