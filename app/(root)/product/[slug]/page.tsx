@@ -15,9 +15,7 @@ const ProductDetailsPage = async (props: {
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-5">
-        {/* Images Column */}
         <div className="col-span-2"></div>
-        {/* Product details */}
         <div className="col-span-2 p-5">
           <div className="flex flex-col gap-6">
             <p>{product.brand}</p>
@@ -37,7 +35,6 @@ const ProductDetailsPage = async (props: {
             <p>{product.description}</p>
           </div>
         </div>
-        {/* Action Column */}
         <div>
           <Card>
             <CardContent className="p-4">
