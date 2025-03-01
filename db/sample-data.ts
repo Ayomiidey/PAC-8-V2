@@ -2,7 +2,7 @@ const sampleData = {
   products: [
     {
       name: "Paper Biodegradable Stand Up Pouch with Ziplock",
-      slug: "Paper Biodegradable Stand Up Pouch with Ziplock",
+      slug: "paper-biodegradable-stand-up-pouch-with-ziplock",
       category: "packaging bag",
       description:
         "Custom Printed Food Grade Kraft Paper Pla Biodegradable Stand Up Pouch with Ziplock",
@@ -22,7 +22,7 @@ const sampleData = {
     },
     {
       name: "Snack Packaging box",
-      slug: "Snack Packaging box",
+      slug: "snack-packaging-box",
       category: "packaging box",
       description:
         "Wholesale Custom Eco-friendly Snack, Fries, Burger Packing Boxes. Biodegradable Food Grade Kraft Paper Boxes",
@@ -41,7 +41,7 @@ const sampleData = {
     },
     {
       name: "Plastic Fruit Container",
-      slug: "Plastic Fruit Container ",
+      slug: "plastic-fruit-container",
       category: "packaging box",
       description:
         "Free Sample 8 Section Clear Food Grad PET Plastic Fruit Container for Apples Peaches Oranges",
@@ -61,7 +61,7 @@ const sampleData = {
     },
     {
       name: "Custom Resealable Food Plastic Bag",
-      slug: "Custom Resealable Food Plastic Bag",
+      slug: "custom-resealable-food-plastic-bag",
       category: "packaging bag",
       description: "Streamlined design with flexible stretch fabric",
       images: [
@@ -80,7 +80,7 @@ const sampleData = {
     },
     {
       name: "burger box packaging box",
-      slug: "burger box packaging box",
+      slug: "burger-box-packaging-box",
       category: "packaging box",
       description:
         "Customizable disposable corrugated hamburger takeaway burger box packaging box",
@@ -100,7 +100,7 @@ const sampleData = {
     },
     {
       name: "Fruit-Juice Paper Bag",
-      slug: "Fruit-Juice Paper Bag",
+      slug: "fruit-juice-paper-bag",
       category: "packaging bag",
       description: "High quality custom logo printed Fruit-Juice Paper Bag",
       images: [
@@ -118,7 +118,7 @@ const sampleData = {
     },
     {
       name: "Custom Burger Packaging Box",
-      slug: "Custom Burger Packaging Box",
+      slug: "custom-burger-packaging-box",
       category: "packaging box",
       description:
         "Wholesale Custom Burger Packaging Box Kraft Boxes For Burger Burger Box & Fries Paper",
@@ -138,7 +138,7 @@ const sampleData = {
     },
     {
       name: "White Paper Cupcake Boxes",
-      slug: "White Paper Cupcake Boxes",
+      slug: "white-paper-cupcake-boxes",
       category: "packaging box",
       description:
         "White Paper Cupcake Boxes with Insert Cookie Gift Boxes with Clear Window 4 Treat Holder Cupcake Containers Bakery Cake Box",
