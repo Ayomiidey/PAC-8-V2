@@ -1,9 +1,32 @@
+"use client";
+
+import { signInWithCredential } from "@/lib/actions/user.action";
 import { signInDefaultValues } from "@/lib/constants";
 import Link from "next/link";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 
-const SignInForm = () => {
+const CredentialsSignInForm = () => {
+  const [data, action] = useActionState(signInWithCredential, {
+    message: "",
+    success: false,
+  });
+
+  const SignInButton = () => {
+    const { pending } = useFormStatus();
+    return (
+      <button
+        disabled={pending}
+        type="submit"
+        className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 bg-purple-800 text-white shadow hover:bg-primary/90 disabled:pointer-events-none disabled:opacity-50"
+      >
+        {pending ? "Signing in" : "Sign in"}
+      </button>
+    );
+  };
+
   return (
-    <form className="flex flex-col gap-6">
+    <form action={action} className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl  tracking-tight">Login to your account</h1>
       </div>
@@ -43,19 +66,18 @@ const SignInForm = () => {
             id="password"
             name="password"
             type="password"
-            // autoComplete="password"
+            autoComplete="password"
             defaultValue={signInDefaultValues.password}
             required
             className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
           />
         </div>
-
-        <button
-          type="submit"
-          className="inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 bg-purple-800 text-white shadow hover:bg-primary/90 disabled:pointer-events-none disabled:opacity-50"
-        >
-          Sign In
-        </button>
+        <div>
+          <SignInButton />
+        </div>
+        {data && !data.success && (
+          <div className="text-center text-destructive">{data.message}</div>
+        )}
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -89,4 +111,4 @@ const SignInForm = () => {
   );
 };
 
-export default SignInForm;
+export default CredentialsSignInForm;

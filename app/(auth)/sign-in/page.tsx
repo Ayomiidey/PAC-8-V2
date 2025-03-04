@@ -1,12 +1,20 @@
 import { Metadata } from "next";
 import Image from "next/image";
-import SignInForm from "./sign-in-form";
+import SignInForm from "./credentials-signin-form";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
-const SignInPage = () => {
+const SignInPage = async () => {
+  const session = await auth();
+
+  if (session) {
+    return redirect("/");
+  }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -20,7 +28,7 @@ const SignInPage = () => {
         <Image
           src="/images/pac8BlackLogo.png"
           alt="Pac8 logo"
-          layout="fill"
+          fill
           objectFit="cover"
           className="absolute inset-0"
         />

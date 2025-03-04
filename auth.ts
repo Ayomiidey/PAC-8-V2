@@ -8,6 +8,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 // import { pages } from "next/dist/build/templates/app-page";
 
 export const config = {
+  secret: process.env.NEXT_AUTH_SECRET,
   pages: {
     signIn: "/sign-in",
     error: "/sign-in",
