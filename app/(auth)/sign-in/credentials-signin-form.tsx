@@ -5,12 +5,16 @@ import { signInDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { useSearchParams } from "next/navigation";
 
 const CredentialsSignInForm = () => {
   const [data, action] = useActionState(signInWithCredential, {
     message: "",
     success: false,
   });
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const SignInButton = () => {
     const { pending } = useFormStatus();
@@ -27,6 +31,7 @@ const CredentialsSignInForm = () => {
 
   return (
     <form action={action} className="flex flex-col gap-6">
+      <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl  tracking-tight">Login to your account</h1>
       </div>
