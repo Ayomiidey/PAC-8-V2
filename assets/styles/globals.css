@@ -4,7 +4,8 @@
 
 @layer utilities {
   .wrapper {
-    @apply max-w-[90%] lg:mx-auto p-5 md:px-10 w-full;
+    /* @apply max-w-[90%] lg:mx-auto p-5 md:px-10 w-full; */
+    @apply max-w-[1440px] sm:max-w-[90%] mx-auto px-5 sm:px-6 lg:px-8 w-full;
   }
 
   .flex-start {
