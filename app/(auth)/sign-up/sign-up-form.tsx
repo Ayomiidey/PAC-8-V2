@@ -1,14 +1,14 @@
 "use client";
 
-import { signInWithCredential } from "@/lib/actions/user.action";
-import { signInDefaultValues } from "@/lib/constants";
+import { signUpUser } from "@/lib/actions/user.action";
+import { signUpDefaultValues } from "@/lib/constants";
 import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
 
-const CredentialsSignInForm = () => {
-  const [data, action] = useActionState(signInWithCredential, {
+const SignUpForm = () => {
+  const [data, action] = useActionState(signUpUser, {
     message: "",
     success: false,
   });
@@ -16,7 +16,7 @@ const CredentialsSignInForm = () => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
-  const SignInButton = () => {
+  const SignUpButton = () => {
     const { pending } = useFormStatus();
     return (
       <button
@@ -24,7 +24,7 @@ const CredentialsSignInForm = () => {
         type="submit"
         className="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-9 px-4 py-2 bg-purple-800 text-white shadow hover:bg-primary/90 disabled:pointer-events-none disabled:opacity-50"
       >
-        {pending ? "Signing in" : "Sign in"}
+        {pending ? "Submitting..." : "Sign Up"}
       </button>
     );
   };
@@ -33,10 +33,25 @@ const CredentialsSignInForm = () => {
     <form action={action} className="flex flex-col gap-6">
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl  tracking-tight">Login to your account</h1>
+        <h1 className="text-2xl  tracking-tight">Create an account</h1>
       </div>
 
       <div className="grid gap-4">
+        <div className="grid gap-2">
+          <label htmlFor="email" className="text-sm font-medium leading-none ">
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="name"
+            autoComplete="name"
+            defaultValue={signUpDefaultValues.name}
+            required
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+          />
+        </div>
+
         <div className="grid gap-2">
           <label htmlFor="email" className="text-sm font-medium leading-none ">
             Email
@@ -46,39 +61,49 @@ const CredentialsSignInForm = () => {
             name="email"
             type="email"
             autoComplete="email"
-            defaultValue={signInDefaultValues.email}
+            defaultValue={signUpDefaultValues.email}
             required
             className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
           />
         </div>
 
         <div className="grid gap-2">
-          <div className="flex items-center justify-between">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium leading-none"
-            >
-              Password
-            </label>
-            <Link
-              href="#"
-              className="text-sm text-primary underline-offset-4 hover:underline"
-            >
-              Forgot your password?
-            </Link>
-          </div>
+          <label
+            htmlFor="password"
+            className="text-sm font-medium leading-none "
+          >
+            Password
+          </label>
           <input
             id="password"
             name="password"
             type="password"
             autoComplete="password"
-            defaultValue={signInDefaultValues.password}
+            defaultValue={signUpDefaultValues.password}
+            required
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <label
+            htmlFor="confirmPassword"
+            className="text-sm font-medium leading-none "
+          >
+            Password
+          </label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autoComplete="confirmPassword"
+            defaultValue={signUpDefaultValues.confirmPassword}
             required
             className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm"
           />
         </div>
         <div>
-          <SignInButton />
+          <SignUpButton />
         </div>
         {data && !data.success && (
           <div className="text-center text-destructive">{data.message}</div>
@@ -104,16 +129,16 @@ const CredentialsSignInForm = () => {
       </div>
 
       <div className="text-center text-sm text-muted-foreground">
-        Don&apos;t have an account?{" "}
+        Already have an account?
         <Link
-          href="/sign-up"
+          href="/sign-in"
           className="text-primary underline-offset-4 hover:underline"
         >
-          Sign up
+          Sign In
         </Link>
       </div>
     </form>
   );
 };
 
-export default CredentialsSignInForm;
+export default SignUpForm;
