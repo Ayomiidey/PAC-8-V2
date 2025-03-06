@@ -90,7 +90,7 @@ const SignUpForm = () => {
             htmlFor="confirmPassword"
             className="text-sm font-medium leading-none "
           >
-            Password
+            Confirm Password
           </label>
           <input
             id="confirmPassword"
