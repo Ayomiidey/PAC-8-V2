@@ -41,7 +41,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       name: formData.get("name"),
       email: formData.get("email"),
       password: formData.get("password"),
-      confrimPassword: formData.get("confirmPassword"),
+      confirmPassword: formData.get("confirmPassword"),
     });
 
     const plainPassword = user.password;
