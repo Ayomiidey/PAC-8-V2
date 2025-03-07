@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
-
+import GoogleLoginButton from "./googleLoginButton";
 const SignInForm = () => {
   const [data, action] = useActionState(signInWithCredential, {
     message: "",
@@ -34,6 +34,9 @@ const SignInForm = () => {
       <input type="hidden" name="callbackUrl" value={callbackUrl} />
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl  tracking-tight">Login to your account</h1>
+        <p className="text-sm text-gray-600">
+          Enter your email below to login to your account
+        </p>
       </div>
 
       <div className="grid gap-4">
@@ -95,12 +98,9 @@ const SignInForm = () => {
           </div>
         </div>
 
-        {/* <div className="flex justify-center">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => setError("Google login failed")}
-                />
-              </div> */}
+        <div className="flex justify-center">
+          <GoogleLoginButton />
+        </div>
       </div>
 
       <div className="text-center text-sm text-muted-foreground">
