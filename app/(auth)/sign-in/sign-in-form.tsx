@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
-import GoogleLoginButton from "./googleLoginButton";
+import GoogleLoginButton from "../googleLoginButton";
+
 const SignInForm = () => {
   const [data, action] = useActionState(signInWithCredential, {
     message: "",
@@ -92,9 +93,7 @@ const SignInForm = () => {
             <span className="w-full border-t"></span>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-600">
-              Or continue with
-            </span>
+            <span className="bg-white px-2 text-gray-600">OR</span>
           </div>
         </div>
 

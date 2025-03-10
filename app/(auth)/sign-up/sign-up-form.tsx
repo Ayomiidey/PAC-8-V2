@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useSearchParams } from "next/navigation";
+import GoogleLoginButton from "../googleLoginButton";
 
 const SignUpForm = () => {
   const [data, action] = useActionState(signUpUser, {
@@ -117,18 +118,13 @@ const SignUpForm = () => {
             <span className="w-full border-t"></span>
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-gray-600">
-              Or continue with
-            </span>
+            <span className="bg-white px-2 text-gray-600">OR</span>
           </div>
         </div>
 
-        {/* <div className="flex justify-center">
-                <GoogleLogin
-                  onSuccess={handleGoogleSuccess}
-                  onError={() => setError("Google login failed")}
-                />
-              </div> */}
+        <div className="flex justify-center">
+          <GoogleLoginButton />
+        </div>
       </div>
 
       <div className="text-center text-sm text-muted-foreground">
