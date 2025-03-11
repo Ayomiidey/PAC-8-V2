@@ -40,7 +40,7 @@ export const signUpFormSchema = z
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password don't match",
-    path: ["confirmPasswprd"],
+    path: ["confirmPassword"],
   });
 
 //Cart Item Schema
