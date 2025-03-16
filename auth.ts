@@ -5,7 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/db/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-// import { pages } from "next/dist/build/templates/app-page";
+// import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export const config = {
   secret: process.env.NEXT_AUTH_SECRET,
