@@ -5,7 +5,6 @@ export async function middleware(request: any) {
   const sessionCartId = request.cookies.get("sessionCartId")?.value;
 
   if (!sessionCartId) {
-    // Generate a new sessionCartId if it doesn’t exist
     const newSessionCartId = crypto.randomUUID();
 
     // Create a response to set the cookie
@@ -14,8 +13,8 @@ export async function middleware(request: any) {
       name: "sessionCartId",
       value: newSessionCartId,
       path: "/",
-      maxAge: 30 * 24 * 60 * 60, // 30 days
-      httpOnly: true, // Optional: makes cookie inaccessible to client-side JS
+      maxAge: 30 * 24 * 60 * 60,
+      httpOnly: true, // makes cookie inaccessible to client-side JS
     });
 
     return response; // Return response with the new cookie
