@@ -2,9 +2,14 @@
 
 import { cookies } from "next/headers";
 import { CartItem } from "@/types";
-import { convertToPlainObject, formatError } from "../utils";
+import { convertToPlainObject, formatError, round2 } from "../utils";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
+import { cartItemSchema } from "../validators";
+
+const calcPrice = (items: CartItem[]){
+  const itemsPrice = round2(items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0))
+}
 
 export async function addItemToCart(data: CartItem) {
   try {
@@ -14,6 +19,22 @@ export async function addItemToCart(data: CartItem) {
     //Get session and userId
     const session = await auth();
     const userId = session?.user?.id ? (session.user.id as string) : undefined;
+
+    const cart = await getMyCart();
+
+    //parse and validate item
+    const item = cartItemSchema.parse(data);
+
+    const product = await prisma.product.findFirst({
+      where: { id: item.productId },
+    });
+
+    console.log({
+      "Session Cart id": sessionCartId,
+      "User ID": userId,
+      "item Requested": item,
+      "product Found": product,
+    });
 
     return {
       success: true,
