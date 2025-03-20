@@ -56,7 +56,7 @@ export async function addItemToCart(data: CartItem) {
       revalidatePath(`/product/${product.slug}`);
       return {
         success: true,
-        message: `${product.name} added succcessfully to cart`,
+        message: `${product.name} added to cart`,
       };
     } else {
       const existingItem = (cart.items as CartItem[]).find(
@@ -78,6 +78,13 @@ export async function addItemToCart(data: CartItem) {
           ...calcPrice(cart.items as CartItem[]),
         },
       });
+      revalidatePath(`/product/${product.slug}`);
+      return {
+        success: true,
+        message: `${product.name} ${
+          existingItem ? "updated in" : "added to"
+        } cart`,
+      };
     }
   } catch (error) {
     return {
