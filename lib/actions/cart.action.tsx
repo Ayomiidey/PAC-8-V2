@@ -5,6 +5,8 @@ import { CartItem } from "@/types";
 import { convertToPlainObject, formatError, round2 } from "../utils";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
+import { Prisma } from "@prisma/client";
+
 import { cartItemSchema, insertCartSchema } from "../validators";
 import { revalidatePath } from "next/cache";
 
@@ -69,6 +71,10 @@ export async function addItemToCart(data: CartItem) {
         if (product.stock < 1) throw new Error("Not enough stok");
         cart.items.push(item);
       }
+      await prisma.cart.update({
+        where: { id: cart.id },
+        data: { items: cart.items as Prisma.CartUpdateitemsInput[] },
+      });
     }
   } catch (error) {
     return {
