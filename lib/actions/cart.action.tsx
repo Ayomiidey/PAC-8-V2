@@ -82,7 +82,7 @@ export async function addItemToCart(data: CartItem) {
       return {
         success: true,
         message: `${product.name} ${
-          existingItem ? "updated in" : "added to"
+          existingItem ? "Updated in" : "Added to"
         } cart`,
       };
     }
