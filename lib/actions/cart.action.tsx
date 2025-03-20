@@ -5,11 +5,24 @@ import { CartItem } from "@/types";
 import { convertToPlainObject, formatError, round2 } from "../utils";
 import { auth } from "@/auth";
 import { prisma } from "@/db/prisma";
-import { cartItemSchema } from "../validators";
+import { cartItemSchema, insertCartSchema } from "../validators";
+import { revalidatePath } from "next/cache";
 
-const calcPrice = (items: CartItem[]){
-  const itemsPrice = round2(items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0))
-}
+const calcPrice = (items: CartItem[]) => {
+  const itemsPrice = round2(
+      items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+    ),
+    shippingPrice = round2(itemsPrice > 100 ? 0 : 10),
+    taxPrice = round2(0.15 * itemsPrice),
+    totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+
+  return {
+    itemsPrice: itemsPrice.toFixed(2),
+    shippingPrice: shippingPrice.toFixed(2),
+    taxPrice: taxPrice.toFixed(2),
+    totalPrice: totalPrice.toFixed(2),
+  };
+};
 
 export async function addItemToCart(data: CartItem) {
   try {
@@ -29,17 +42,34 @@ export async function addItemToCart(data: CartItem) {
       where: { id: item.productId },
     });
 
-    console.log({
-      "Session Cart id": sessionCartId,
-      "User ID": userId,
-      "item Requested": item,
-      "product Found": product,
-    });
-
-    return {
-      success: true,
-      message: "Item added succcessfully to cart",
-    };
+    if (!product) throw new Error("product not found");
+    if (!cart) {
+      const newCart = insertCartSchema.parse({
+        userId: userId,
+        sessionCartId: sessionCartId,
+        items: [item],
+        ...calcPrice([item]),
+      });
+      await prisma.cart.create({ data: newCart });
+      revalidatePath(`/product/${product.slug}`);
+      return {
+        success: true,
+        message: `${product.name} added succcessfully to cart`,
+      };
+    } else {
+      const existingItem = (cart.items as CartItem[]).find(
+        (x) => x.productId === item.productId
+      );
+      if (existingItem) {
+        if (product.stock < existingItem.qty + 1) {
+          throw new Error("Not enough Stock");
+        }
+        existingItem.qty += 1;
+      } else {
+        if (product.stock < 1) throw new Error("Not enough stok");
+        cart.items.push(item);
+      }
+    }
   } catch (error) {
     return {
       success: false,
