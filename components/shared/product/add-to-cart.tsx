@@ -1,12 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
-import { CartItem } from "@/types";
-import { addItemToCart } from "@/lib/actions/cart.action";
+import { Plus, Minus } from "lucide-react";
+import { Cart, CartItem } from "@/types";
+import { addItemToCart, removeItemFromCar } from "@/lib/actions/cart.action";
 import { toast } from "sonner";
 
-const AddToCart = ({ item }: { item: CartItem }) => {
+const AddToCart = ({ item, cart }: { item: CartItem; cart?: Cart }) => {
   const router = useRouter();
   const handleAddToCart = async () => {
     const res = await addItemToCart(item);
