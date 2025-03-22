@@ -13,7 +13,7 @@ const ProductCard = ({ product }: { product: Product }) => {
       <button
         aria-label="Add to wishlist"
         className="absolute right-2 top-2 z-10 rounded-full bg-white p-1 sm:right-3 sm:top-3 sm:p-1.5 opacity-70 transition-opacity hover:opacity-100 dark:bg-gray-800"
-        // onClick={(e) => e.stopPropagation()} // Prevent navigation when clicking the heart
+        // onClick={(e) => e.stopPropagation()} // Prevent navigation when clicking the hearts
       >
         <Heart size={16} className="text-gray-600 dark:text-gray-300" />
       </button>
