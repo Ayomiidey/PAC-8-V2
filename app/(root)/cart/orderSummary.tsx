@@ -1,4 +1,9 @@
+"use client";
+
 import { formatCurrency } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
+import { useTransition } from "react";
 
 const OrderSummary = ({
   totalPrice,
@@ -9,6 +14,8 @@ const OrderSummary = ({
   taxPrice: number;
   itemsTotalPrice: number;
 }) => {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   return (
     <div className="md:col-span-1">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden sticky top-4">
@@ -38,7 +45,16 @@ const OrderSummary = ({
               </span>
             </div>
 
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors">
+            <button
+              disabled={isPending}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors flex items-center justify-center gap-2"
+              onClick={() =>
+                startTransition(() => router.push("/shipping-address"))
+              }
+            >
+              <span>
+                <ArrowRight />
+              </span>
               Proceed to Checkout
             </button>
           </div>

@@ -6,7 +6,7 @@ const APP_NAME = "PAC-8";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 bg-white w-full border-b">
+    <header className="fixed top-0 left-0 bg-white w-full border-b z-50">
       <div className="wrapper flex items-center justify-between py-4 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <Link href="/" className="flex items-center">

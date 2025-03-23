@@ -1,21 +1,13 @@
 "use client";
 
 import { Cart } from "@/types";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import {
   addItemToCart,
   removeItemFromCart,
   deleteFromCart,
 } from "@/lib/actions/cart.action";
-import {
-  ArrowRight,
-  Loader,
-  Minus,
-  Plus,
-  ShoppingCart,
-  Trash,
-} from "lucide-react";
+import { Loader, Minus, Plus, ShoppingCart, Trash } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -23,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import OrderSummary from "./orderSummary";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   return (
@@ -123,9 +114,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                                 )}
                               </Button>
                             </div>
-                            {/* <p className="font-medium">
-                        ${cartItem.totalPrice.toFixed(2)}
-                      </p> */}
+                            {/* <p className="font-medium">${cartItem.price}</p> */}
                             <button
                               onClick={() =>
                                 startTransition(async () => {
