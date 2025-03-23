@@ -25,6 +25,7 @@ import OrderSummary from "./orderSummary";
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+
   return (
     <>
       {!cart || cart.items.length === 0 ? (
@@ -158,7 +159,11 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
             </div>
 
             <div className="md:col-span-1">
-              <OrderSummary />
+              <OrderSummary
+                itemsTotalPrice={Number(cart.itemsPrice)}
+                taxPrice={Number(cart.taxPrice)}
+                totalPrice={Number(cart.totalPrice)}
+              />
             </div>
           </div>
         </div>
