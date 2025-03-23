@@ -3,14 +3,18 @@
 import { Cart } from "@/types";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.action";
+import {
+  addItemToCart,
+  removeItemFromCart,
+  deleteFromCart,
+} from "@/lib/actions/cart.action";
 import {
   ArrowRight,
   Loader,
   Minus,
   Plus,
-  ShoppingBag,
-  DeleteIcon,
+  ShoppingCart,
+  Trash,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -35,8 +39,9 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                 <div className="sticky top-0 bg-white border-b border-gray-200 z-10">
                   <div className="p-6">
                     <h2 className="text-xl font-semibold flex items-center gap-2">
-                      <ShoppingBag className="h-5 w-5" />
-                      {/* Your Shopping Cart ({totalQuantity} items) */}
+                      <ShoppingCart className="h-5 w-5" />
+                      Your Shopping Cart (
+                      {cart.items.reduce((a, c) => a + c.qty, 0)} items)
                     </h2>
                   </div>
                 </div>
@@ -88,7 +93,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                                 }
                               >
                                 {isPending ? (
-                                  <Loader className="w-4 h-4" />
+                                  <Loader className="w-4 h-4 animate-spin" />
                                 ) : (
                                   <Minus className="w-4 h-4" />
                                 )}
@@ -111,7 +116,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                                 }
                               >
                                 {isPending ? (
-                                  <Loader className="w-4 h-4" />
+                                  <Loader className="w-4 h-4 animate-spin" />
                                 ) : (
                                   <Plus className="w-4 h-4" />
                                 )}
@@ -119,14 +124,30 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                             </div>
                             {/* <p className="font-medium">
                         ${cartItem.totalPrice.toFixed(2)}
-                      </p>
-                      <button
-                        onClick={() => dispatch(removeFromCart(cartItem.id))}
-                        className="mt-2 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center gap-1"
-                      >
-                        <DeleteIcon className="h-4 w-4" />
-                        Remove
-                      </button> */}
+                      </p> */}
+                            <button
+                              onClick={() =>
+                                startTransition(async () => {
+                                  const res = await deleteFromCart(
+                                    cartItem.productId
+                                  );
+                                  if (!res.success) {
+                                    toast.error(res.message);
+                                    return;
+                                  }
+
+                                  toast.success(res.message);
+                                })
+                              }
+                              className="mt-2 px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors flex items-center gap-1"
+                            >
+                              {isPending ? (
+                                <Loader className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Trash className="h-4 w-4" />
+                              )}
+                              Remove
+                            </button>
                           </div>
                         </div>
                       ))}
