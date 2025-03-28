@@ -19,9 +19,9 @@ export const signUpDefaultValues = {
 };
 
 export const shippingAddressDefaultValues = {
-  fullName: "Quadri Ayo",
-  streetAddress: "123 Main St",
-  city: "San Francisco",
-  postalCode: "12345",
-  country: "USA",
+  fullName: "",
+  streetAddress: "",
+  city: "",
+  postalCode: "",
+  country: "",
 };
