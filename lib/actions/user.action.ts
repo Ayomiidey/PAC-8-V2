@@ -1,11 +1,16 @@
 "use server";
 
-import { signInFormSchema, signUpFormSchema } from "../validators";
-import { signIn, signOut } from "@/auth";
+import {
+  shippingAddressSchema,
+  signInFormSchema,
+  signUpFormSchema,
+} from "../validators";
+import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatError } from "@/lib/utils";
+import { ShippingAddress } from "@/types";
 //Sign in the user with credential
 export async function signInWithCredential(
   prevState: unknown,
@@ -71,5 +76,32 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 }
 
 export async function getUserById(userId: string) {
-  prisma.user.findFirst({ where: { id: userId } });
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new Error(`User with ID ${userId} not found`);
+  }
+
+  return user;
+}
+
+export async function updateUserAction(data: ShippingAddress) {
+  try {
+    const session = await auth();
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+    });
+    if (!currentUser) throw new Error("User not found");
+
+    const address = shippingAddressSchema.parse(data);
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { address }, //This simply means {address: address}, i'm just using the javascript shorthand since the property name and the variable name are the same
+    });
+    return { success: true, message: "Address updated successfully" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
 }

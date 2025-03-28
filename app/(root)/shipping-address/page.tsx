@@ -3,21 +3,28 @@ import { getUserById } from "@/lib/actions/user.action";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import ShippingAddressForm from "./shipping-address-form";
+import type { ShippingAddress } from "@/types";
 
-export const metadata: Metadata = { title: "Shipping Address" };
+export const metadata: Metadata = {
+  title: "Shipping Address",
+};
 
-const ShippingAddress = async () => {
+const ShippingAddressPage = async () => {
   const cart = await getMyCart();
   if (!cart || cart.items.length === 0) redirect("/cart");
 
   const session = await auth();
 
   const userId = await session?.user?.id;
-
   if (!userId) throw new Error("There is no user");
 
   const user = await getUserById(userId);
-  return <>Address</>;
+  return (
+    <>
+      <ShippingAddressForm address={user.address as ShippingAddress} />
+    </>
+  );
 };
 
-export default ShippingAddress;
+export default ShippingAddressPage;
