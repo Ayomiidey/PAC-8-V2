@@ -25,7 +25,7 @@ export async function middleware(request: any) {
     path.startsWith(protectedPath)
   );
 
-  // If the route is protected and there's no token, redirect to sign-in
+  //If the route is protected and there's no token, redirect to sign-in
   if (isProtectedRoute && !token) {
     const signInUrl = new URL("/sign-in", request.url);
     signInUrl.searchParams.set("callbackUrl", request.url);
