@@ -79,6 +79,7 @@ export const config = {
       if (user) {
         token.id = user.id;
         token.role = user.role;
+        token.name = user.name;
 
         // If user has no name, use email as their default name
         if (user.name === "NO_NAME") {
