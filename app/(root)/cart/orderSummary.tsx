@@ -4,7 +4,6 @@ import { formatCurrency } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { useTransition } from "react";
-import { useSession } from "next-auth/react";
 
 const OrderSummary = ({
   totalPrice,
@@ -17,16 +16,6 @@ const OrderSummary = ({
 }) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const { data: session } = useSession();
-  const handleCheckout = () => {
-    startTransition(() => {
-      if (session) {
-        router.push("/shipping-address");
-      } else {
-        router.push("/sign-in?callbackUrl=/shipping-address");
-      }
-    });
-  };
   return (
     <div className="md:col-span-1">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden sticky top-4">
@@ -59,7 +48,9 @@ const OrderSummary = ({
             <button
               disabled={isPending}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors flex items-center justify-center gap-2"
-              onClick={handleCheckout}
+              onClick={() =>
+                startTransition(() => router.push("/shipping-address"))
+              }
             >
               <span>
                 <ArrowRight />
