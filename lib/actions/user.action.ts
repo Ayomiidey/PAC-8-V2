@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  paymentMethodSchema,
   shippingAddressSchema,
   signInFormSchema,
   signUpFormSchema,
@@ -10,7 +11,7 @@ import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatError } from "@/lib/utils";
-import { ShippingAddress } from "@/types";
+import { PaymentMethod, ShippingAddress } from "@/types";
 //Sign in the user with credential
 export async function signInWithCredential(
   prevState: unknown,
@@ -101,6 +102,24 @@ export async function updateUserAction(data: ShippingAddress) {
       data: { address }, //This simply means {address: address}, i'm just using the javascript shorthand since the property name and the variable name are the same
     });
     return { success: true, message: "Address updated successfully" };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
+
+export async function updateUserPaymentMethod(data: PaymentMethod) {
+  try {
+    const session = await auth();
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+    });
+    if (!currentUser) throw new Error("User not found");
+    const paymentMethod = paymentMethodSchema.parse(data);
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { paymentMethod: paymentMethod.type },
+    });
+    return { success: true, message: "User updated succesfully" };
   } catch (error) {
     return { success: false, message: formatError(error) };
   }
